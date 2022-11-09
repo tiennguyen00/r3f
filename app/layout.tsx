@@ -1,3 +1,4 @@
+import Link from "next/link"
 import "./globals.css"
 
 export default function RootLayout({
@@ -13,7 +14,42 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <h1>hello</h1> {children}
+        {" "}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Link href="/tool" replace>
+            <button
+              style={{
+                background: "orange",
+                padding: "2px 4px",
+                borderRadius: "1.5px",
+                color: "black",
+                marginRight: "2px",
+              }}
+            >
+              Wallpaper tool
+            </button>
+          </Link>
+          <Link href="/three_md" replace>
+            <button
+              style={{
+                background: "orange",
+                padding: "2px 4px",
+                borderRadius: "1.5px",
+                color: "black",
+                marginRight: "2px",
+              }}
+            >
+              Three
+            </button>
+          </Link>
+        </div>{" "}
+        {children}
       </body>
     </html>
   )
