@@ -1,3 +1,4 @@
+"use client"
 import React, { Ref, Suspense, useRef, useState } from "react"
 import {
   Float,

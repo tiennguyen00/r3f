@@ -14,7 +14,6 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        {" "}
         <div
           style={{
             width: "100%",
@@ -35,7 +34,7 @@ export default function RootLayout({
               Wallpaper tool
             </button>
           </Link>
-          <Link href="/three_md" replace>
+          <Link href="/three_md">
             <button
               style={{
                 background: "orange",
@@ -48,7 +47,33 @@ export default function RootLayout({
               Three
             </button>
           </Link>
-        </div>{" "}
+          <Link href="/load-model">
+            <button
+              style={{
+                background: "orange",
+                padding: "2px 4px",
+                borderRadius: "1.5px",
+                color: "black",
+                marginRight: "2px",
+              }}
+            >
+              Load Model
+            </button>
+          </Link>
+          <Link href="/porfolio" replace>
+            <button
+              style={{
+                background: "orange",
+                padding: "2px 4px",
+                borderRadius: "1.5px",
+                color: "black",
+                marginRight: "2px",
+              }}
+            >
+              Porfolio
+            </button>
+          </Link>
+        </div>
         {children}
       </body>
     </html>

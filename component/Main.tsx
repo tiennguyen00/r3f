@@ -1,3 +1,4 @@
+"use client"
 import { extend, Object3DNode, useFrame, useThree } from "@react-three/fiber"
 import React, { useRef } from "react"
 import { BoxGeometry, Group, Material, Mesh } from "three"
