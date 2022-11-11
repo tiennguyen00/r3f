@@ -3,12 +3,13 @@ import {
   ContactShadows,
   MeshReflectorMaterial,
   OrbitControls,
+  useAnimations,
   useFBX,
   useGLTF,
 } from "@react-three/drei"
 import { useFrame, useLoader } from "@react-three/fiber"
 import { Suspense, useEffect, useMemo, useRef } from "react"
-import { MeshStandardMaterial } from "three"
+import THREE, { MeshStandardMaterial } from "three"
 import { TGALoader } from "three/examples/jsm/loaders/TGALoader.js"
 import { useControls } from "leva"
 import { Perf } from "r3f-perf"
@@ -49,13 +50,20 @@ const recursive = (obj: any) => {
 //   return <primitive object={fbx} scale={0.01} />
 // }
 
-const LoadModalGLTF = ({ modelName }: { modelName: string[] }) => {
+const LoadModalGLTF = ({
+  modelName,
+  animationsBone,
+}: {
+  modelName: string[]
+  animationsBone: any
+}) => {
   const array = modelName.map((i) => `models/INU/${i}.gltf`)
   const [ao, gangtay, giay, head, phukien, quan] = useGLTF(array)
+  // console.log(ao, gangtay, giay, head, phukien, quan)
+  console.log("a", animationsBone)
 
   useMemo(() => {
     ao.scene.traverse((node: any) => {
-      console.log(node)
       if (node.isMesh) node.castShadow = true
     })
     quan.scene.traverse((node: any) => {
@@ -82,32 +90,54 @@ const LoadModalGLTF = ({ modelName }: { modelName: string[] }) => {
     quan.scene,
   ])
 
+  const group = useRef(null)
+
+  const animationsA = useAnimations(animationsBone, group)
+  const animationsB = useAnimations(animationsBone, gangtay.scene)
+  const animationsC = useAnimations(animationsBone, giay.scene)
+  const animationsD = useAnimations(animationsBone, head.scene)
+  const animationsE = useAnimations(animationsBone, phukien.scene)
+  const animationsF = useAnimations(animationsBone, quan.scene)
+
+  useEffect(() => {
+    const name = "animation_0"
+    const animations = [
+      animationsA,
+      animationsB,
+      animationsC,
+      animationsD,
+      animationsE,
+      animationsF,
+    ]
+    if (animations.length > 5) {
+      animations.forEach((child) => {
+        child.actions[name]?.fadeIn(0.5).play()
+      })
+    }
+
+    return () => {
+      animations.forEach((child) => {
+        child.actions[name]?.fadeOut(0.5).reset()
+      })
+    }
+  }, [])
+
   return (
-    <>
-      <primitive object={ao.scene} scale={0.01} />
-      <primitive object={gangtay.scene} scale={0.01} />
-      <primitive object={giay.scene} scale={0.01} />
-      <primitive object={head.scene} scale={0.01} />
-      <primitive object={phukien.scene} scale={0.01} />
-      <primitive object={quan.scene} scale={0.01} />
-    </>
+    <group ref={group}>
+      <primitive ref={animationsA.ref} object={ao.scene} scale={0.01} />
+      <primitive ref={animationsB.ref} object={gangtay.scene} scale={0.01} />
+      <primitive ref={animationsC.ref} object={giay.scene} scale={0.01} />
+      <primitive ref={animationsD.ref} object={head.scene} scale={0.01} />
+      <primitive ref={animationsE.ref} object={phukien.scene} scale={0.01} />
+      <primitive ref={animationsF.ref} object={quan.scene} scale={0.01} />
+    </group>
   )
 }
 
 export default function TestLoadModel() {
   const inuRef = useRef(null)
-  const { head, hand, hat, pant, shoes, cloth } = useControls({
-    head: { options: ["HEAD1", "HEAD2"] },
-    hand: { options: ["HAND1", "HAND2"] },
-    hat: { options: ["HAT1", "HAT2"] },
-    pant: { options: ["PANT1", "PANT2"] },
-    shoes: { options: ["SHOES1", "SHOES2"] },
-    cloth: { options: ["CLOTH1", "CLOTH2"] },
-  })
-
-  useFrame((state, delta) => {
-    inuRef.current && ((inuRef.current as any).rotation.y += Math.sin(delta))
-  })
+  const BoneAnim = useGLTF("/models/INU/Bone.gltf")
+  console.log(BoneAnim)
 
   return (
     <>
@@ -120,7 +150,8 @@ export default function TestLoadModel() {
 
       <group ref={inuRef}>
         <LoadModalGLTF
-          modelName={["ao", "gangtay", "giay", "head", "phukien", "quan"]}
+          animationsBone={BoneAnim.animations}
+          modelName={["Accessory", "Cloth", "Hand", "Pant", "Shoes", "Head"]}
         />
       </group>
 

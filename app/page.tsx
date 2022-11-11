@@ -19,7 +19,6 @@ const Home: NextLayoutComponentType = () => {
     >
       <Leva collapsed />
       <Canvas
-        shadows={true}
         gl={{
           antialias: true,
           toneMapping: ACESFilmicToneMapping,
@@ -30,12 +29,12 @@ const Home: NextLayoutComponentType = () => {
           near: 0.1,
           far: 100,
         }}
-        onCreated={({ gl }) => {
-          gl.setClearColor("transparent")
-        }}
+        // onCreated={({ gl }) => {
+        //   gl.setClearColor("transparent")
+        // }}
       >
-        {/* <TestLoadModel /> */}
-        <Portfolio />
+        <TestLoadModel />
+        {/* <Portfolio /> */}
       </Canvas>
     </div>
   )
