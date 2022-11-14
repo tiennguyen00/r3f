@@ -1,9 +1,11 @@
 "use client"
+import { Physics } from "@react-three/cannon"
 import { Canvas } from "@react-three/fiber"
 import { Leva } from "leva"
 import { NextLayoutComponentType } from "next"
+import { Perf } from "r3f-perf"
 import { ACESFilmicToneMapping } from "three"
-import { Portfolio, TestLoadModel } from "../component"
+import { Physical, Portfolio, TestLoadModel } from "../component"
 
 const Home: NextLayoutComponentType = () => {
   return (
@@ -19,6 +21,7 @@ const Home: NextLayoutComponentType = () => {
     >
       <Leva collapsed />
       <Canvas
+        shadows
         gl={{
           antialias: true,
           toneMapping: ACESFilmicToneMapping,
@@ -33,8 +36,12 @@ const Home: NextLayoutComponentType = () => {
         //   gl.setClearColor("transparent")
         // }}
       >
-        <TestLoadModel />
-        {/* <Portfolio /> */}
+        <Physics>
+          <Perf position="top-left" />
+          {/* <TestLoadModel /> */}
+          {/* <Portfolio /> */}
+          <Physical />
+        </Physics>
       </Canvas>
     </div>
   )

@@ -137,7 +137,6 @@ const LoadModalGLTF = ({
 export default function TestLoadModel() {
   const inuRef = useRef(null)
   const BoneAnim = useGLTF("/models/INU/Bone.gltf")
-  console.log(BoneAnim)
 
   return (
     <>

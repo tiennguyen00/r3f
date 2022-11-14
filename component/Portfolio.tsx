@@ -116,6 +116,7 @@ const Portfolio = () => {
               fontSize={1}
               maxWidth={2}
               textAlign={"center"}
+              position={[-2, 2, 0]}
             >
               ALEX MAHONE
             </Text>
