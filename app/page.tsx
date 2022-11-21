@@ -1,6 +1,6 @@
 "use client"
-import { Physics } from "@react-three/cannon"
 import { Canvas } from "@react-three/fiber"
+import { Physics } from "@react-three/rapier"
 import { Leva } from "leva"
 import { NextLayoutComponentType } from "next"
 import { Perf } from "r3f-perf"
@@ -36,7 +36,7 @@ const Home: NextLayoutComponentType = () => {
         //   gl.setClearColor("transparent")
         // }}
       >
-        <Physics>
+        <Physics gravity={[0, -9.08, 0]}>
           <Perf position="top-left" />
           {/* <TestLoadModel /> */}
           {/* <Portfolio /> */}

@@ -1,4 +1,5 @@
-import { SubCpt } from "../../component"
+import { SubCpt } from "../../../component"
+import "./globals.css"
 
 type Props = {}
 

@@ -2,8 +2,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import React, { useState } from "react"
-import { toBlob, toPng } from "html-to-image"
-import { saveAs } from "file-saver"
+import toPng from "../../utils/toPng"
 interface ImagePreviewProps {
   src: string
   srcLogo: string
@@ -139,13 +138,12 @@ const WallPaperTool = ({ overrideURL }: WallPaperToolProps) => {
   const [loadChanged, setLoadChanged] = useState(false)
   const handleDownload = () => {
     let node = document.getElementById("preview-image")
-    toBlob(node as any)
-      .then((blob) => {
-        !!blob
-          ? saveAs(blob, "test_framework")
-          : console.error("Blob data is not available")
-      })
-      .catch((err) => console.error("Something went wrong: ", err))
+    toPng(node as any, {}).then((dataUrl) => {
+      const downloadLink = document.createElement("a")
+      downloadLink.href = dataUrl
+      downloadLink.download = "fileName"
+      downloadLink.click()
+    })
   }
   return (
     <>
